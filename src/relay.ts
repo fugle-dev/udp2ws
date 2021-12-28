@@ -1,4 +1,4 @@
-import { createSocket, SocketType } from 'dgram';
+import { createSocket, RemoteInfo, SocketType } from 'dgram';
 import { WebSocket, WebSocketServer, ServerOptions } from 'ws';
 
 export interface RelayOptions {
@@ -8,6 +8,7 @@ export interface RelayOptions {
   multicastAddress?: string,
   multicastInterface?: string,
   wssOptions?: ServerOptions,
+  middleware?: (msg: Buffer, rinfo: RemoteInfo, next: (data: any) => void) => void,
 }
 
 export class Relay {
@@ -32,7 +33,13 @@ export class Relay {
     socket.on('message', (msg, rinfo) => {
       wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
-          client.send(msg);
+          if (this.options.middleware) {
+            this.options.middleware(msg, rinfo, (data) => {
+              client.send(data);
+            });
+          } else {
+            client.send(msg);
+          }
         }
       });
     });
