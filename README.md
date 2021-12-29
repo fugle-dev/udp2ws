@@ -5,7 +5,7 @@
 ## Install
 
 ```sh
-$ npm install --save udpws
+$ npm install --save udp2ws
 ```
 
 ## Usage
@@ -20,11 +20,11 @@ relay.listen(3000, () => {
 });
 ```
 
-### API
+## API
 
-```js
-const relay = new Relay(options)
-```
+### new Relay(options)
+
+Create a new relay instance.
 
 - `options`: Set of configurable options to set on the relay. Can have the following fields:
   - `type` {string} Either 'udp4' or 'udp6'. **Default:**`udp4`
@@ -35,23 +35,22 @@ const relay = new Relay(options)
   - `wssOptions` {Object} Set of configurable options to set on the WebSocket server. Please see [ws](https://github.com/websockets/ws/blob/master/doc/ws.md#class-websocketserver) documentation for details.
   - `middleware` {Function} Define middleware function to intercept incoming UDP packets.
 
-
-    ```js
-    const relay = new Relay({
-      port: '1234',
-      multicastAddress: '224.0.0.114',
-      middleware: (msg, rInfo, next) => {
-        // messages with longer length will not be relayed, because 'next' will not be invoked.
-        if (msg.length <= 120) {
-          next(msg);
-        }
-      },
-    });
-    ```
+#### Example
 
 ```js
-relay.listen(port[, callback])
+const relay = new Relay({
+  port: '1234',
+  multicastAddress: '224.0.0.114',
+  middleware: (msg, rInfo, next) => {
+    // messages with longer length will not be relayed, because 'next' will not be invoked.
+    if (msg.length <= 120) {
+      next(msg);
+    }
+  },
+});
 ```
+
+### relay.listen(port[, callback])
 
 Start the relay (WebSocket) server listening for connections.
 
