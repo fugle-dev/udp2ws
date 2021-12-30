@@ -1,4 +1,4 @@
-import { createSocket, RemoteInfo, SocketType } from 'dgram';
+import { createSocket, Socket, RemoteInfo, SocketType } from 'dgram';
 import { WebSocket, WebSocketServer, ServerOptions } from 'ws';
 
 export interface RelayOptions {
@@ -12,6 +12,9 @@ export interface RelayOptions {
 }
 
 export class Relay {
+  private socket?: Socket;
+  private wss?: WebSocketServer;
+
   constructor(private readonly options: RelayOptions) {
     if (!options?.port) {
       throw new Error(`Missing required "port" option`);
@@ -50,11 +53,13 @@ export class Relay {
       });
     });
 
+    this.socket = socket;
+
     return wss;
   }
 
-  listen(port: number, listeningListener?: () => void): WebSocketServer {
-    const { server, ...wssOptions } = this.options?.wssOptions || {};
+  listen(port: number, listeningListener?: () => void): this {
+    const { server, ...wssOptions } = this.options.wssOptions || {};
 
     if (server) {
       const wss = this.bindSocket(
@@ -64,7 +69,8 @@ export class Relay {
         })
       );
       server.listen(port, listeningListener);
-      return wss;
+      this.wss = wss;
+      return this;
     }
 
     const wss = this.bindSocket(
@@ -72,6 +78,13 @@ export class Relay {
         ...wssOptions,
         port: port || wssOptions.port,
       }, listeningListener));
-    return wss;
+    this.wss = wss;
+    return this;
+  }
+
+  close(callback?: () => void) {
+    this.socket?.close();
+    this.wss?.close(callback);
+    if (!this.wss && callback) callback();
   }
 }
