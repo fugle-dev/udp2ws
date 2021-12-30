@@ -52,10 +52,14 @@ const relay = new Relay({
 
 ### relay.listen(port[, callback])
 
-Start the relay (WebSocket) server listening for connections.
+Starts the relay (WebSocket) server listening for connections.
 
 - `port` {number} The port where to bind the server.
 - `callback` {Function} Called when the server is listening for connections.
+
+### relay.close([callback])
+
+Stops the relay (WebSocket) server from accepting new connections.
 
 ## License
 
