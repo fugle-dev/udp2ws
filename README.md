@@ -69,8 +69,8 @@ Stops the relay (WebSocket) server from accepting new connections.
 
 [MIT](LICENSE)
 
-[npm-image]: https://img.shields.io/npm/v/chunkai1312/udp2ws.svg
-[npm-url]: https://npmjs.com/package/chunkai1312/udp2ws
+[npm-image]: https://img.shields.io/npm/v/udp2ws.svg
+[npm-url]: https://npmjs.com/package/udp2ws
 [action-image]: https://img.shields.io/github/workflow/status/chunkai1312/udp2ws/Node.js%20CI
 [action-url]: https://github.com/chunkai1312/udp2ws/actions/workflows/node.js.yml
 [codecov-image]: https://img.shields.io/codecov/c/github/chunkai1312/udp2ws.svg
