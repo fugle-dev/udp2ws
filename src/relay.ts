@@ -48,8 +48,8 @@ export class Relay {
     });
 
     wss.on('connection', (ws) => {
-      ws.on('message', (data, isBinary) => {
-        socket.send(data.toString(), port, address);
+      ws.on('message', (data) => {
+        socket.send(data as any, port, address);
       });
     });
 
