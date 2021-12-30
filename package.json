@@ -9,6 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
+    "coverage": "codecov",
     "lint": "eslint '{src,test}/**/*.ts' --fix"
   },
   "repository": "https://github.com/chunkai1312/udp-ws-relay.git",
@@ -23,6 +24,7 @@
     "@types/ws": "^8.2.2",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
+    "codecov": "^3.8.3",
     "eslint": "^8.5.0",
     "jest": "^27.4.5",
     "rimraf": "^3.0.2",
