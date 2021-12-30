@@ -22,7 +22,7 @@ export class Relay {
     this.options = options;
   }
 
-  bindSocket(wss: WebSocketServer) {
+  private bindSocket(wss: WebSocketServer): WebSocketServer {
     const { type, address, port, multicastAddress, multicastInterface } = this.options;
 
     const socket = createSocket(type || 'udp4');
@@ -34,17 +34,21 @@ export class Relay {
     });
 
     socket.on('message', (msg, rinfo) => {
-      wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-          if (this.options.middleware) {
-            this.options.middleware(msg, rinfo, (data) => {
+      if (this.options.middleware) {
+        this.options.middleware(msg, rinfo, (data) => {
+          wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
               client.send(data);
-            });
-          } else {
+            }
+          });
+        });
+      } else {
+        wss.clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
             client.send(msg);
           }
-        }
-      });
+        });
+      }
     });
 
     wss.on('connection', (ws) => {
