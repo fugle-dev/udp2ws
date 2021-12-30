@@ -2,7 +2,8 @@
   "name": "udp2ws",
   "version": "0.1.0",
   "description": "Relay UDP packets to WebSocket server",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "tsc",
@@ -12,7 +13,20 @@
     "coverage": "codecov",
     "lint": "eslint '{src,test}/**/*.ts' --fix"
   },
-  "repository": "https://github.com/chunkai1312/udp-ws-relay.git",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chunkai1312/udp2ws.git"
+  },
+  "keywords": [
+    "udp",
+    "ws",
+    "dgram",
+    "websocket",
+    "relay"
+  ],
   "author": "Chun-Kai Wang <chunkai1312@gmail.com>",
   "license": "MIT",
   "dependencies": {
