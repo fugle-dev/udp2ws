@@ -1,6 +1,9 @@
 import { createSocket, Socket, RemoteInfo, SocketType } from 'dgram';
 import { WebSocket, WebSocketServer, ServerOptions } from 'ws';
 
+const SOCKET = Symbol('Relay#socket');
+const WSS = Symbol('Relay#wss');
+
 export interface RelayOptions {
   type?: SocketType;
   port: number;
@@ -12,8 +15,8 @@ export interface RelayOptions {
 }
 
 export class Relay {
-  private socket?: Socket;
-  private wss?: WebSocketServer;
+  private [SOCKET]?: Socket;
+  private [WSS]?: WebSocketServer;
 
   constructor(private readonly options: RelayOptions) {
     if (!options?.port) {
@@ -22,8 +25,16 @@ export class Relay {
     this.options = options;
   }
 
+  get socket() {
+    return this[SOCKET];
+  }
+
+  get wss() {
+    return this[WSS];
+  }
+
   private bindSocket(wss: WebSocketServer): WebSocketServer {
-    const { type, address, port, multicastAddress, multicastInterface } = this.options;
+    const { type, address, port, multicastAddress, multicastInterface, middleware } = this.options;
 
     const socket = createSocket(type || 'udp4');
 
@@ -34,8 +45,8 @@ export class Relay {
     });
 
     socket.on('message', (msg, rinfo) => {
-      if (this.options.middleware) {
-        this.options.middleware(msg, rinfo, (data) => {
+      if (middleware) {
+        middleware(msg, rinfo, (data) => {
           wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
               client.send(data);
@@ -57,38 +68,42 @@ export class Relay {
       });
     });
 
-    this.socket = socket;
+    this[SOCKET] = socket;
 
     return wss;
   }
 
-  listen(port: number, listeningListener?: () => void): this {
+  public listen(port?: number, listeningListener?: () => void): this {
     const { server, ...wssOptions } = this.options.wssOptions || {};
 
+    if (!port && !wssOptions.port) {
+      throw new Error(`Argument "port" or "wssOptions.port" must be specified`);
+    }
+
     if (server) {
-      const wss = this.bindSocket(
+      this[WSS] = this.bindSocket(
         new WebSocketServer({
           server,
           ...wssOptions,
         })
       );
       server.listen(port, listeningListener);
-      this.wss = wss;
-      return this;
+    } else {
+      this[WSS] = this.bindSocket(
+        new WebSocketServer({
+          ...wssOptions,
+          port: port || wssOptions.port,
+        }, listeningListener)
+      );
     }
 
-    const wss = this.bindSocket(
-      new WebSocketServer({
-        ...wssOptions,
-        port: port || wssOptions.port,
-      }, listeningListener));
-    this.wss = wss;
     return this;
   }
 
-  close(callback?: () => void) {
+  public close(callback?: (err?: Error) => void): this {
     this.socket?.close();
     this.wss?.close(callback);
     if (!this.wss && callback) callback();
+    return this;
   }
 }
