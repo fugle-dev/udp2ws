@@ -101,4 +101,39 @@ describe('udpws', () => {
       relay.close(() => server.close(done));
     });
   });
+
+  it('should receive multiple UDP multicast packets from relay with middleware', (done) => {
+    const port = 41234;
+    const multicastAddress = '224.100.100.100';
+    const wssPort = 8080;
+    const received: string[] = [];
+
+    let server: Socket;
+    const relay = new Relay({
+      port,
+      multicastAddress,
+      middleware: (msg, rInfo, next) => {
+        const characters = msg.toString().split('');
+        next(characters);
+      },
+    }).listen(wssPort);
+    const ws = new WebSocket(`ws://localhost:${wssPort}`);
+
+    ws.on('open', () => {
+      server = createServer({ port, multicastAddress });
+    });
+
+    ws.on('message', (msg, isBinary) => {
+      received.push(msg.toString());
+      if (received.length === 5) {
+        const string = received.join('');
+        expect(string).toBe('hello');
+        ws.close();
+      }
+    });
+
+    ws.on('close', () => {
+      relay.close(() => server.close(done));
+    });
+  });
 });

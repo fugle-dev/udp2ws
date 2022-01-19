@@ -49,7 +49,11 @@ export class Relay {
         middleware(msg, rinfo, (data) => {
           wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
-              client.send(data);
+              if (Array.isArray(data)) {
+                data.forEach(d => client.send(d));
+              } else {
+                client.send(data);
+              }
             }
           });
         });
