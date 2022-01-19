@@ -1,4 +1,5 @@
 import { createServer } from 'http';
+import { AddressInfo } from 'net';
 import { Relay } from '../src';
 
 describe('Relay', () => {
@@ -27,25 +28,28 @@ describe('Relay', () => {
   describe('listen()', () => {
     it('should listen for connections', (done) => {
       const relay = new Relay({ port: 41234 }).listen(3000);
-      // @ts-expect-error
-      expect(relay.wss.options.port).toBe(3000);
+      expect(relay.wss?.options.port).toBe(3000);
       relay.close(done);
     });
 
     it('should listen for connections with wssOptions.port', (done) => {
-      // @ts-expect-error
       const relay = new Relay({ port: 41234, wssOptions: { port: 3000 } }).listen();
-      // @ts-expect-error
-      expect(relay.wss.options.port).toBe(3000);
+      expect(relay.wss?.options.port).toBe(3000);
       relay.close(done);
     });
 
     it('should listen for connections with external server', (done) => {
       const server = createServer();
       const relay = new Relay({ port: 41234, wssOptions: { server } }).listen(3000);
-      // @ts-expect-error
-      expect(server.address().port).toBe(3000);
+      const address = server.address() as AddressInfo;
+      expect(address.port).toBe(3000);
       server.close(() => relay.close(done));
+    });
+
+    it('should throw error with missing port or wssOption.port', () => {
+      expect(() => {
+        const relay = new Relay({ port: 41234 }).listen();
+      }).toThrowError();
     });
   });
 
@@ -53,13 +57,11 @@ describe('Relay', () => {
     it('should close relay server', (done) => {
       const relay = new Relay({ port: 41234 }).listen(3000);
       relay.close();
-      // @ts-expect-error
-      relay.wss.on('close', done);
+      relay.wss?.on('close', done);
     });
 
     it('should close without listening', (done) => {
       const relay = new Relay({ port: 41234 });
-      // @ts-expect-error
       expect(relay.wss).toBe(undefined);
       relay.close(done);
     });
