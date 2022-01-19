@@ -65,6 +65,14 @@ Starts the relay (WebSocket) server listening for connections.
 
 Stops the relay (WebSocket) server from accepting new connections.
 
+### relay.socket
+
+Accesses the `dgram.Socket` instance, which is available when the relay server is started.
+
+### relay.wss
+
+Accesses the `ws.WebSocketServer` instance, which is available when the relay server is started.
+
 ## License
 
 [MIT](LICENSE)
