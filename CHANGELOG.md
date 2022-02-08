@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/chunkai1312/udp2ws/compare/v1.0.0...v1.1.0) (2022-02-08)
+
+
+### Features
+
+* allow to use specific version of ws ([d26f40e](https://github.com/chunkai1312/udp2ws/commit/d26f40e9c4a9135214ffe83e40c5630b94c8f116))
+
 ## [1.0.0](https://github.com/chunkai1312/udp2ws/compare/v0.1.2...v1.0.0) (2022-01-19)
 
 
