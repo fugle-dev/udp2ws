@@ -9,7 +9,7 @@
 ## Install
 
 ```sh
-$ npm install --save udp2ws
+$ npm install --save udp2ws ws
 ```
 
 ## Usage
