@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/chunkai1312/udp2ws/compare/v1.1.0...v1.1.1) (2022-02-10)
+
+
+### Bug Fixes
+
+* support for ws versions after 5.0.0 ([fbdc097](https://github.com/chunkai1312/udp2ws/commit/fbdc097d86ed582f7d0d61502a4879604b4f5b4a))
+
 ## [1.1.0](https://github.com/chunkai1312/udp2ws/compare/v1.0.0...v1.1.0) (2022-02-08)
 
 
