@@ -56,8 +56,7 @@ describe('Relay', () => {
   describe('close()', () => {
     it('should close relay server', (done) => {
       const relay = new Relay({ port: 41234 }).listen(3000);
-      relay.close();
-      relay.wss?.on('close', done);
+      relay.close(done);
     });
 
     it('should close without listening', (done) => {

@@ -1,5 +1,5 @@
 import { createSocket, Socket, RemoteInfo, SocketType } from 'dgram';
-import { WebSocket, WebSocketServer, ServerOptions } from 'ws';
+import * as WebSocket from 'ws';
 
 const SOCKET = Symbol('Relay#socket');
 const WSS = Symbol('Relay#wss');
@@ -10,13 +10,13 @@ export interface RelayOptions {
   address?: string;
   multicastAddress?: string,
   multicastInterface?: string,
-  wssOptions?: ServerOptions,
+  wssOptions?: WebSocket.ServerOptions,
   middleware?: (msg: Buffer, rinfo: RemoteInfo, next: (data: any) => void) => void,
 }
 
 export class Relay {
   private [SOCKET]?: Socket;
-  private [WSS]?: WebSocketServer;
+  private [WSS]?: WebSocket.Server;
 
   constructor(private readonly options: RelayOptions) {
     if (!options?.port) {
@@ -33,7 +33,7 @@ export class Relay {
     return this[WSS];
   }
 
-  private bindSocket(wss: WebSocketServer): WebSocketServer {
+  private bindSocket(wss: WebSocket.Server): WebSocket.Server {
     const { type, address, port, multicastAddress, multicastInterface, middleware } = this.options;
 
     const socket = createSocket(type || 'udp4');
@@ -86,7 +86,7 @@ export class Relay {
 
     if (server) {
       this[WSS] = this.bindSocket(
-        new WebSocketServer({
+        new WebSocket.Server({
           server,
           ...wssOptions,
         })
@@ -94,7 +94,7 @@ export class Relay {
       server.listen(port, listeningListener);
     } else {
       this[WSS] = this.bindSocket(
-        new WebSocketServer({
+        new WebSocket.Server({
           ...wssOptions,
           port: port || wssOptions.port,
         }, listeningListener)

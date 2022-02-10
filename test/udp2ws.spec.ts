@@ -3,7 +3,7 @@ import { createServer } from './udp-server';
 import { Relay } from '../src';
 import { Socket } from 'dgram';
 
-describe('udpws', () => {
+describe('udp2ws', () => {
   it('should receive UDP packets from relay', (done) => {
     const port = 41234;
     const wssPort = 8080;
@@ -15,8 +15,7 @@ describe('udpws', () => {
       ws.send('hello');
     });
 
-    ws.on('message', (msg, isBinary) => {
-      expect(isBinary).toBe(true);
+    ws.on('message', (msg) => {
       expect(msg.toString()).toBe('hello');
       ws.close();
     });
@@ -38,8 +37,7 @@ describe('udpws', () => {
       server = createServer({ port, broadcast: true });
     });
 
-    ws.on('message', (msg, isBinary) => {
-      expect(isBinary).toBe(true);
+    ws.on('message', (msg) => {
       expect(msg.toString()).toBe('hello');
       ws.close();
     });
@@ -62,8 +60,7 @@ describe('udpws', () => {
       server = createServer({ port, multicastAddress });
     });
 
-    ws.on('message', (msg, isBinary) => {
-      expect(isBinary).toBe(true);
+    ws.on('message', (msg) => {
       expect(msg.toString()).toBe('hello');
       ws.close();
     });
@@ -92,7 +89,7 @@ describe('udpws', () => {
       server = createServer({ port, multicastAddress });
     });
 
-    ws.on('message', (msg, isBinary) => {
+    ws.on('message', (msg) => {
       expect(msg.toString()).toBe('hi');
       ws.close();
     });
@@ -123,7 +120,7 @@ describe('udpws', () => {
       server = createServer({ port, multicastAddress });
     });
 
-    ws.on('message', (msg, isBinary) => {
+    ws.on('message', (msg) => {
       received.push(msg.toString());
       if (received.length === 5) {
         const string = received.join('');
