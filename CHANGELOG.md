@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/chunkai1312/udp2ws/compare/v1.1.1...v1.2.0) (2022-02-11)
+
+
+### Features
+
+* unsupport for forwarding multiple packets in sequence via middleware ([7721db5](https://github.com/chunkai1312/udp2ws/commit/7721db5b73a420613a23d4aa85986b8b7efb0287))
+
 ### [1.1.1](https://github.com/chunkai1312/udp2ws/compare/v1.1.0...v1.1.1) (2022-02-10)
 
 
