@@ -47,11 +47,13 @@ export class Relay {
     socket.on('message', (msg, rinfo) => {
       if (interceptor) {
         const message = interceptor(msg, rinfo);
-        wss.clients.forEach(client => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(message);
-          }
-        });
+        if (message) {
+          wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+              client.send(message);
+            }
+          });
+        }
       } else {
         wss.clients.forEach(client => {
           if (client.readyState === WebSocket.OPEN) {
