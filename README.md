@@ -37,7 +37,7 @@ Create a new relay instance.
   - `multicastAddress` {string} The IP multicast group address.
   - `multicastInterface` {string} The local IP address associated with a network interface.
   - `wssOptions` {Object} Set of configurable options to set on the WebSocket server. Please see [ws](https://github.com/websockets/ws/blob/master/doc/ws.md#class-websocketserver) documentation for details.
-  - `middleware` {Function} Define middleware function to intercept incoming UDP packets.
+  - `interceptor` {Function} Define the function to intercept incoming UDP packets.
 
 #### Example
 
@@ -45,11 +45,9 @@ Create a new relay instance.
 const relay = new Relay({
   port: '1234',
   multicastAddress: '224.0.0.114',
-  middleware: (msg, rInfo, next) => {
-    // messages with longer length will not be relayed, because 'next' will not be invoked.
-    if (msg.length <= 120) {
-      next(msg);
-    }
+  interceptor: (msg, rInfo, next) => {
+    // messages with longer length will not be relayed
+    if (msg.length <= 120) return msg;
   },
 });
 ```
