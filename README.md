@@ -45,7 +45,7 @@ Create a new relay instance.
 const relay = new Relay({
   port: '1234',
   multicastAddress: '224.0.0.114',
-  interceptor: (msg, rInfo, next) => {
+  interceptor: (msg, rInfo) => {
     // messages with longer length will not be relayed
     if (msg.length <= 120) return msg;
   },
