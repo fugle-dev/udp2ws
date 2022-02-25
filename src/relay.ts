@@ -11,7 +11,7 @@ export interface RelayOptions {
   multicastAddress?: string,
   multicastInterface?: string,
   wssOptions?: WebSocket.ServerOptions,
-  middleware?: (msg: Buffer, rinfo: RemoteInfo, next: (data: any) => void) => void,
+  interceptor?: (msg: Buffer, rinfo: RemoteInfo) => any,
 }
 
 export class Relay {
@@ -34,7 +34,7 @@ export class Relay {
   }
 
   private bindSocket(wss: WebSocket.Server): WebSocket.Server {
-    const { type, address, port, multicastAddress, multicastInterface, middleware } = this.options;
+    const { type, address, port, multicastAddress, multicastInterface, interceptor } = this.options;
 
     const socket = createSocket(type || 'udp4');
 
@@ -45,13 +45,12 @@ export class Relay {
     });
 
     socket.on('message', (msg, rinfo) => {
-      if (middleware) {
-        middleware(msg, rinfo, (data) => {
-          wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-              client.send(data);
-            }
-          });
+      if (interceptor) {
+        const message = interceptor(msg, rinfo);
+        wss.clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
+          }
         });
       } else {
         wss.clients.forEach(client => {
