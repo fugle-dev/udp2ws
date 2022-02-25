@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/chunkai1312/udp2ws/compare/v1.2.0...v2.0.0) (2022-02-25)
+
+
+### Features
+
+* use interceptor instead of middleware ([3c114a3](https://github.com/chunkai1312/udp2ws/commit/3c114a35d168431e192fc45c1fd144203ed8e9bf))
+
 ## [1.2.0](https://github.com/chunkai1312/udp2ws/compare/v1.1.1...v1.2.0) (2022-02-11)
 
 
