@@ -79,8 +79,8 @@ describe('udp2ws', () => {
     const relay = new Relay({
       port,
       multicastAddress,
-      middleware: (msg, rInfo, next) => {
-        next('hi');
+      interceptor: (msg, rInfo) => {
+        return 'hi';
       },
     }).listen(wssPort);
     const ws = new WebSocket(`ws://localhost:${wssPort}`);
