@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/chunkai1312/udp2ws/compare/v2.0.1...v2.1.0) (2022-04-18)
+
+
+### Features
+
+* allow to reuse the address for creating socket ([fee6db1](https://github.com/chunkai1312/udp2ws/commit/fee6db1cd843ebfdcbdd05d973389d4507249861))
+
 ### [2.0.1](https://github.com/chunkai1312/udp2ws/compare/v2.0.0...v2.0.1) (2022-02-25)
 
 ## [2.0.0](https://github.com/chunkai1312/udp2ws/compare/v1.2.0...v2.0.0) (2022-02-25)
