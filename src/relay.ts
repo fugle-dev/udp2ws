@@ -8,6 +8,7 @@ export interface RelayOptions {
   type?: SocketType;
   port: number;
   address?: string;
+  exclusive?: boolean;
   multicastAddress?: string,
   multicastInterface?: string,
   wssOptions?: WebSocket.ServerOptions,
@@ -34,14 +35,14 @@ export class Relay {
   }
 
   private bindSocket(wss: WebSocket.Server): WebSocket.Server {
-    const { type, address, port, multicastAddress, multicastInterface, interceptor } = this.options;
+    const { type, address, port, exclusive, multicastAddress, multicastInterface, interceptor } = this.options;
 
     const socket = createSocket({
       type: type || 'udp4',
       reuseAddr: true,
     });
 
-    socket.bind(port, address, () => {
+    socket.bind({ port, address, exclusive }, () => {
       if (multicastAddress) {
         socket.addMembership(multicastAddress, multicastInterface);
       }
