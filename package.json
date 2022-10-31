@@ -1,6 +1,6 @@
 {
   "name": "udp2ws",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Relay UDP packets to WebSocket server",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
