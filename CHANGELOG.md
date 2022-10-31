@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/chunkai1312/udp2ws/compare/v2.1.0...v2.2.0) (2022-10-31)
+
+
+### Features
+
+* add exclusive option for binding socket ([de59e16](https://github.com/chunkai1312/udp2ws/commit/de59e16cb5d725033adae8fcdcb851a9fbc2d460))
+
 ## [2.1.0](https://github.com/chunkai1312/udp2ws/compare/v2.0.1...v2.1.0) (2022-04-18)
 
 
