@@ -34,6 +34,7 @@ Create a new relay instance.
   - `type` {string} Either 'udp4' or 'udp6'. **Default:**`udp4`
   - `port` {number} Destination port.
   - `address` {string} Destination host name or IP address.
+  - `exclusive` {boolean} Boolean value true or false. **Default:**`false`
   - `multicastAddress` {string} The IP multicast group address.
   - `multicastInterface` {string} The local IP address associated with a network interface.
   - `wssOptions` {Object} Set of configurable options to set on the WebSocket server. Please see [ws](https://github.com/websockets/ws/blob/master/doc/ws.md#class-websocketserver) documentation for details.
