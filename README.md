@@ -78,7 +78,7 @@ Accesses the `ws.WebSocketServer` instance, which is available when the relay se
 
 [npm-image]: https://img.shields.io/npm/v/udp2ws.svg
 [npm-url]: https://npmjs.com/package/udp2ws
-[action-image]: https://img.shields.io/github/workflow/status/chunkai1312/udp2ws/Node.js%20CI
+[action-image]: https://img.shields.io/github/actions/workflow/status/chunkai1312/udp2ws/node.js.yml?branch=master
 [action-url]: https://github.com/chunkai1312/udp2ws/actions/workflows/node.js.yml
 [codecov-image]: https://img.shields.io/codecov/c/github/chunkai1312/udp2ws.svg
 [codecov-url]: https://codecov.io/gh/chunkai1312/udp2ws
