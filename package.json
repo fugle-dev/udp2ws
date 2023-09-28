@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chunkai1312/udp2ws.git"
+    "url": "git+https://github.com/fugle-dev/udp2ws.git"
   },
   "keywords": [
     "udp",
